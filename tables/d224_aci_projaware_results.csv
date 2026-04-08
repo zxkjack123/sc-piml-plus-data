@@ -1,0 +1,13 @@
+method,target,projection,global_picp,tail_picp_1ky_10ky,median_width,mean_width,source_run
+aci_projaware,atoms_H3,aware,0.8909674981103552,0.0,1.097084532426773,1.8682155368580011,d224_cvplus_projaware_H3
+aci_unprojected,atoms_H3,none,0.9040060468631897,1.0,1.093411838031529,1.1019261631606267,d224_cvplus_smoke
+enbpi_projaware,atoms_H3,aware,0.8843537414965986,0.0,1.0987283440006281,1.9117448531587948,d224_cvplus_projaware_H3
+enbpi_unprojected,atoms_H3,none,0.9126984126984127,1.0,1.098560816749348,1.1048183210730782,d224_cvplus_smoke
+proposed_cvplus_projaware,atoms_H3,aware,0.9072184429327287,0.0,1.1204815444204992,1.1269000848169484,d224_cvplus_projaware_H3
+proposed_cvplus_unprojected,atoms_H3,none,0.935374149659864,0.0,1.1094878266187798,1.1136240250912635,d224_cvplus_smoke
+aci_projaware,decay_heat_W,aware,0.9083457526080477,1.0,1.04358135035515,1.0367736104202026,d224_cvplus_projaware_decay_heat
+aci_unprojected,decay_heat_W,none,0.908532041728763,1.0,1.0362687994745174,1.030970821091459,d224_cvplus_decay_heat
+enbpi_projaware,decay_heat_W,aware,0.8999627421758569,0.9772727272727273,1.0435800062192615,1.0350915148977837,d224_cvplus_projaware_decay_heat
+enbpi_unprojected,decay_heat_W,none,0.9020119225037257,1.0,1.0376148234606497,1.0297140762273853,d224_cvplus_decay_heat
+proposed_cvplus_projaware,decay_heat_W,aware,0.8889716840536512,0.9545454545454546,1.0676626847607482,1.0537329363267975,d224_cvplus_projaware_decay_heat
+proposed_cvplus_unprojected,decay_heat_W,none,0.9344262295081968,1.0,1.0486651460093688,1.0388787575386513,d224_cvplus_decay_heat

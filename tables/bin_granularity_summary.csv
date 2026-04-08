@@ -1,0 +1,10 @@
+bins,target,picp,width
+4bins,atoms_H3,0.878,0.1816
+4bins,atoms_Li6,0.943,0.0004
+4bins,atoms_Li7,0.916,0.0000
+7bins,atoms_H3,0.872,0.1752
+7bins,atoms_Li6,0.951,0.0003
+7bins,atoms_Li7,0.918,0.0000
+10bins,atoms_H3,0.878,0.1851
+10bins,atoms_Li6,0.930,0.0004
+10bins,atoms_Li7,0.931,0.0000

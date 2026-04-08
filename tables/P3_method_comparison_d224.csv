@@ -1,0 +1,6 @@
+target,method,global_picp,irr_picp,cool_picp,median_width_factor,median_width_log10
+H-3,Proposed CV+ (time-binned),93.5%,93.0%,96.4%,1.109,0.0902
+H-3,Proposed JP+ (time-binned),92.6%,91.9%,96.4%,1.102,0.0841
+decay heat,Proposed CV+ (time-binned),93.4%,94.8%,87.4%,1.049,0.0413
+decay heat,Proposed CV+ aware+asym,95.7%,96.9%,90.2%,1.067,0.1710
+decay heat,Proposed Split-CP (time-binned),94.6%,95.7%,89.9%,1.052,0.0441

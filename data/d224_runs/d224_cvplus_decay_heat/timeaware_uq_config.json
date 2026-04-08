@@ -1,0 +1,91 @@
+{
+  "add_elapsed_time_features": false,
+  "add_elapsed_total_features": false,
+  "add_h3_decay_basis_features": false,
+  "add_phase_features": true,
+  "batch_id": "n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118",
+  "batch_id_arg": "active",
+  "conformal_adaptive_merge": false,
+  "conformal_cv_folds": 0,
+  "conformal_grouping": "time_bin",
+  "conformal_local_k": 0,
+  "conformal_method": "cv_plus",
+  "conformal_min_bin_size": 10,
+  "conformal_mondrian_time": false,
+  "conformal_ood_k": 0,
+  "conformal_ood_qhat_scale": 1.0,
+  "conformal_ood_quantile": 0.0,
+  "conformal_per_time": false,
+  "conformal_qhat_scale": 1.0,
+  "created_utc": "2026-03-31T06:08:55.077128+00:00",
+  "data_csv": "datasets/wp2_batches/n224_merged_v1/labels_long_bzsum_elapsed_total_with_yref_logratio.csv",
+  "dataset_snapshot": {
+    "artifacts": {
+      "labels_long_merged": {
+        "mtime_utc": "2026-01-21T19:32:48.406962+00:00",
+        "path": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/datasets/wp2_batches/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118/labels_long_merged.csv",
+        "sha256": "3a4c75f3c8927693cc5673596cfd792a84e433bc7593bff3cc9f26067146170a",
+        "size_bytes": 28943712
+      },
+      "manifest": {
+        "mtime_utc": "2026-01-27T15:33:01.578817+00:00",
+        "path": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/datasets/wp2_batches/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118/manifest.jsonl",
+        "sha256": "302a3365aeec7caa2e4f866e6846d633222d81b96b6c383cb91faf904e7c57a7",
+        "size_bytes": 263272
+      },
+      "missing_times": {
+        "mtime_utc": "2026-01-30T01:20:35.427176+00:00",
+        "path": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/reports/wp2_batches/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118/missing_times.csv",
+        "sha256": "68a70368cc57c62af2000a7ffee6137c0fa9ca39ad8fe89a0e14612cb852a573",
+        "size_bytes": 75
+      },
+      "qc_report": {
+        "mtime_utc": "2026-01-30T01:20:35.421175+00:00",
+        "path": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/reports/wp2_batches/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118/qc_report.md",
+        "sha256": "7c61a420b0170a1c9c683d0d094a5a372294144684566a4e2e214fd4a43d7d9d",
+        "size_bytes": 52602
+      }
+    },
+    "batch_id": "n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118",
+    "path": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/datasets/wp2_batches/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118/dataset_snapshot.json",
+    "schedule_basename": "cfetr_cool_709g_zhang2022_v2.yaml",
+    "schedule_yaml": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/schedules/cfetr_cool_709g_zhang2022_v2.yaml",
+    "snapshot_id": "n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118__20260203T143656Z__9d4f8f866415"
+  },
+  "eps": 1.0,
+  "h3_cooling_by_decay": false,
+  "h3_half_life_years": 12.32,
+  "h3_train_irradiation_only": false,
+  "log_targets": [
+    "decay_heat_W"
+  ],
+  "logratio_ref_suffix": "_yref",
+  "logratio_targets": [],
+  "max_plot_samples": 10,
+  "max_years": 1e+30,
+  "midterm_after_shutdown_years": 100.0,
+  "midterm_max_irr_years": 60.0,
+  "midterm_min_gap_years": 50.0,
+  "midterm_shutdown_years": null,
+  "min_years": 0.0,
+  "no_conformal": false,
+  "phase": "all",
+  "plot_pick": "worst",
+  "projection_d2_quantile": 0.95,
+  "projection_d2_scale": 1.0,
+  "projection_mode": "none",
+  "projection_monotonic": "off",
+  "projection_targets": [],
+  "residual_asymmetric": false,
+  "seed": 42,
+  "splits_json": "datasets/wp2_batches/n224_merged_v1/splits_d224_seed42.json",
+  "targets": [
+    "decay_heat_W"
+  ],
+  "time_bin_edges": null,
+  "time_weight_longterm": 1.0,
+  "time_weight_midterm": 1.0,
+  "uq_alpha": 0.1,
+  "uq_method": "residual_conformal",
+  "ylog": false
+}

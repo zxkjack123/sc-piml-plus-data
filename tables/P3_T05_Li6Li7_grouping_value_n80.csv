@@ -1,0 +1,7 @@
+target,method,coverage_90_cal_1d_1y,coverage_90_cal_10y_100y,coverage_90_cal_100y_1ky,uq_half_width_factor_median_10y_100y,uq_half_width_factor_median_100y_1ky,batch,source
+atoms_Li6,global,1.0,0.875,0.9375,1.000389301657973,1.000389301657973,n80,tables/P3_timeaware_per_bin_summary_n80.csv
+atoms_Li6,time_bin,0.875,1.0,1.0,1.0007159512136383,1.0007159512136383,n80,tables/P3_timeaware_per_bin_summary_n80.csv
+atoms_Li6,phase_time_bin,0.875,1.0,1.0,1.0007159512136383,1.0007159512136383,n80,tables/P3_timeaware_per_bin_summary_n80.csv
+atoms_Li7,global,1.0,0.875,0.875,1.0000033149912397,1.0000033149912397,n80,tables/P3_timeaware_per_bin_summary_n80.csv
+atoms_Li7,time_bin,0.88125,1.0,1.0,1.0000071414175165,1.0000071414175165,n80,tables/P3_timeaware_per_bin_summary_n80.csv
+atoms_Li7,phase_time_bin,0.88125,1.0,1.0,1.0000071414175165,1.0000071414175165,n80,tables/P3_timeaware_per_bin_summary_n80.csv

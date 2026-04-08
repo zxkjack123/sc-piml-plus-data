@@ -1,0 +1,106 @@
+{
+  "target": "atoms_Li6",
+  "baseline": {
+    "run_dir": "reports/wp2_timeaware_uq/n70_valid_20260109/20260123T075650Z",
+    "eps": 1.0,
+    "midterm_cutoff_years": 120.0,
+    "coverage_90_cal_midterm": 0.7182539682539683
+  },
+  "candidate": {
+    "run_dir": "/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/reports/wp2_timeaware_uq/n70_valid_20260109/minimal_preset_h3basis_alltargets_20260123T075708Z",
+    "eps": 1.0,
+    "midterm_cutoff_years": 120.0,
+    "coverage_90_cal_midterm": 0.7182539682539683
+  },
+  "slices": {
+    "candidate": {
+      "midterm": {
+        "n": 252,
+        "q90_abs_log10_ratio": 3.3320403730704835,
+        "q95_factor": 362978.97457932634,
+        "q99_factor": 433957.71700826375,
+        "max_factor": 3123248797.326023
+      },
+      "tail_bin_100y_1ky": {
+        "n": 13,
+        "q90_abs_log10_ratio": 3.6607719362599473,
+        "q95_factor": 150160.4283750838,
+        "q99_factor": 321680.8842326848,
+        "max_factor": 364560.99819708534
+      },
+      "tail_window_100_to_min120": {
+        "n": 13,
+        "q90_abs_log10_ratio": 3.6607719362599473,
+        "q95_factor": 150160.4283750838,
+        "q99_factor": 321680.8842326848,
+        "max_factor": 364560.99819708534
+      }
+    },
+    "baseline": {
+      "midterm": {
+        "n": 252,
+        "q90_abs_log10_ratio": 3.3320403730704835,
+        "q95_factor": 362978.97457932634,
+        "q99_factor": 433957.71700826375,
+        "max_factor": 3123248797.326023
+      },
+      "tail_bin_100y_1ky": {
+        "n": 13,
+        "q90_abs_log10_ratio": 3.6607719362599473,
+        "q95_factor": 150160.4283750838,
+        "q99_factor": 321680.8842326848,
+        "max_factor": 364560.99819708534
+      },
+      "tail_window_100_to_min120": {
+        "n": 13,
+        "q90_abs_log10_ratio": 3.6607719362599473,
+        "q95_factor": 150160.4283750838,
+        "q99_factor": 321680.8842326848,
+        "max_factor": 364560.99819708534
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "tail.max_factor <= 2.0",
+      "ok": false,
+      "value": "364561"
+    },
+    {
+      "check": "tail.q99_factor <= 2.0",
+      "ok": false,
+      "value": "321681"
+    },
+    {
+      "check": "tail.max_factor <= 1.1 * baseline_tail.max_factor",
+      "ok": true,
+      "value": "364561 vs 364561"
+    },
+    {
+      "check": "tail.q99_factor <= 1.1 * baseline_tail.q99_factor",
+      "ok": true,
+      "value": "321681 vs 321681"
+    },
+    {
+      "check": "midterm.q90_abs_log10_ratio <= 1.10 * baseline OR <= baseline + 2e-05",
+      "ok": true,
+      "value": "3.33204 vs 3.33204"
+    },
+    {
+      "check": "midterm.q99_factor <= 1.10 * baseline",
+      "ok": true,
+      "value": "433958 vs 433958"
+    },
+    {
+      "check": "coverage_90_cal_midterm >= 0.7",
+      "ok": true,
+      "value": "0.718254"
+    },
+    {
+      "check": "coverage_90_cal_midterm >= baseline - 0.03",
+      "ok": true,
+      "value": "0.718254 vs 0.718254"
+    }
+  ],
+  "passed": false
+}
