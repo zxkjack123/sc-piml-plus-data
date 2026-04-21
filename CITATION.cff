@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite the accompanying manuscript and this archive."
+type: dataset
+title: "SC-PIML+: Time-aware conformal uncertainty quantification with physics-consistent projection — dataset and reproducibility package"
+authors:
+  - family-names: Zhang
+    given-names: Xiaokang
+    orcid: "https://orcid.org/0000-0002-4081-2172"
+    affiliation: "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences"
+  - family-names: Tong
+    given-names: Xilong
+    affiliation: "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences; University of Science and Technology of China"
+  - family-names: Wei
+    given-names: Yanshi
+    affiliation: "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences; University of Science and Technology of China"
+  - family-names: Zheng
+    given-names: Shanliang
+    orcid: "https://orcid.org/0000-0002-1570-8365"
+    email: slzheng@ipp.ac.cn
+    affiliation: "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19679270
+    description: "Zenodo concept DOI for all versions"
+repository-code: "https://github.com/zxkjack123/sc-piml-plus-data"
+url: "https://github.com/zxkjack123/sc-piml-plus-data"
+license: CC-BY-4.0
+keywords:
+  - conformal prediction
+  - uncertainty quantification
+  - scientific machine learning
+  - fusion blanket
+  - activation analysis
+  - FISPACT-II
+date-released: "2026-04-21"
+preferred-citation:
+  type: article
+  title: "Time-aware conformal uncertainty quantification with physics-consistent projection for radioactivity-related time-series prediction"
+  authors:
+    - family-names: Zhang
+      given-names: Xiaokang
+      orcid: "https://orcid.org/0000-0002-4081-2172"
+    - family-names: Tong
+      given-names: Xilong
+    - family-names: Wei
+      given-names: Yanshi
+    - family-names: Zheng
+      given-names: Shanliang
+      orcid: "https://orcid.org/0000-0002-1570-8365"
+      email: slzheng@ipp.ac.cn
+  journal: "Machine Learning: Science and Technology"
+  year: 2026
+  notes: "Submitted"

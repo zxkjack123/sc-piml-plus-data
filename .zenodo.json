@@ -1,0 +1,38 @@
+{
+  "title": "SC-PIML+: Time-aware conformal uncertainty quantification with physics-consistent projection — dataset and reproducibility package",
+  "description": "Frozen archive of the D224+act9 dataset (224 PbLi blanket geometries x 9 activation/decay-heat targets), SC-PIML+ calibration outputs, prediction files (point estimates and 90% conformal intervals), and figure-generation scripts accompanying the manuscript 'Time-aware conformal uncertainty quantification with physics-consistent projection for radioactivity-related time-series prediction' submitted to Machine Learning: Science and Technology (MLST), 2026.",
+  "creators": [
+    {
+      "name": "Zhang, Xiaokang",
+      "orcid": "0000-0002-4081-2172",
+      "affiliation": "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences"
+    },
+    {
+      "name": "Tong, Xilong",
+      "affiliation": "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences; University of Science and Technology of China"
+    },
+    {
+      "name": "Wei, Yanshi",
+      "affiliation": "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences; University of Science and Technology of China"
+    },
+    {
+      "name": "Zheng, Shanliang",
+      "orcid": "0000-0002-1570-8365",
+      "affiliation": "Institute of Plasma Physics, Hefei Institutes of Physical Science, Chinese Academy of Sciences"
+    }
+  ],
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "conformal prediction",
+    "uncertainty quantification",
+    "scientific machine learning",
+    "fusion blanket",
+    "activation analysis",
+    "FISPACT-II",
+    "physics-constrained machine learning"
+  ],
+  "communities": [],
+  "language": "eng"
+}
