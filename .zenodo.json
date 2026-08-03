@@ -1,6 +1,6 @@
 {
   "title": "SC-PIML+: Time-aware conformal uncertainty quantification with physics-consistent projection — dataset and reproducibility package",
-  "description": "Frozen archive of the D224+act9 dataset (224 PbLi blanket geometries x 9 activation/decay-heat targets), SC-PIML+ calibration outputs, prediction files (point estimates and 90% conformal intervals), and figure-generation scripts accompanying the manuscript 'Time-aware conformal uncertainty quantification with physics-consistent projection for radioactivity-related time-series prediction' submitted to Machine Learning: Science and Technology (MLST), 2026.",
+  "description": "Frozen archive of the D224+act9 dataset (224 PbLi blanket geometries x 9 activation/decay-heat targets), SC-PIML+ calibration outputs, prediction files (point estimates and 90% conformal intervals), 20-split stability inputs, and figure-generation scripts accompanying the manuscript 'Time-aware conformal uncertainty quantification with physics-consistent projection for fusion blanket activation time-series prediction' (MLST-105507, revised version R1).",
   "creators": [
     {
       "name": "Zhang, Xiaokang",

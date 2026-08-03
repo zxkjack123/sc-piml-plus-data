@@ -35,7 +35,7 @@ keywords:
 date-released: "2026-04-21"
 preferred-citation:
   type: article
-  title: "Time-aware conformal uncertainty quantification with physics-consistent projection for radioactivity-related time-series prediction"
+  title: "Time-aware conformal uncertainty quantification with physics-consistent projection for fusion blanket activation time-series prediction"
   authors:
     - family-names: Zhang
       given-names: Xiaokang
@@ -50,4 +50,4 @@ preferred-citation:
       email: slzheng@ipp.ac.cn
   journal: "Machine Learning: Science and Technology"
   year: 2026
-  notes: "Submitted"
+  notes: "MLST-105507, revised version R1"
