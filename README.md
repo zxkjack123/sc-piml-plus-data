@@ -53,8 +53,18 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 ├── tables/                       # CSV tables referenced in the paper
 ├── LICENSE
 ├── requirements.txt
+├── PROVENANCE.md                 # Artifact-to-source manifest + exclusion list
 └── README.md
 ```
+
+## Data provenance
+
+`PROVENANCE.md` records, for every numeric artifact in the manuscript, the file that
+produced it, together with an **exclusion list** of artifacts that must not be used to
+derive published numbers. It currently flags one run whose SC-PIML column is contaminated
+by a degenerate log-transform on low-magnitude aggregates, and one superseded partial run.
+It also records the known reproducibility gaps in this release. Consult it before reusing
+any CSV in `tables/`.
 
 ## Reproducing the figures
 
