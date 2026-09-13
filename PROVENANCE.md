@@ -48,12 +48,15 @@ there). This confirms the manuscript's stated range and justifies its wording.
 
 | Artifact | Status | Detail |
 |---|---|---|
-| `tab:component-ablation` | **partial** | The four-row table mixes denominators: the `70% (14/20)` entry is a cross-reference to the 20-split robustness result (fine). The other entries (`0%`, `67% (2/3)`, `67% (2/3)`) describe a **three-split** ablation (seeds 42/100/105 per the section prose), but **only seed-42 artifacts exist on disk** (`reports/wp2_timeaware_uq/d224_seed42_{aggregation_max,aggregation_mean,aggregation_none,sc_none,scpiml_max}`). No producing artifact was found for the `0%` / `2/3` values, and no seeds 100/105 ablation directories exist. The numbers are consistent with the section prose but are **not independently reproducible** from the retained artifacts. |
+| `tab:component-ablation` | **resolved, and the table does not stand** | The harness was recovered and re-run — see `docs/ablation_harness.md`. The two defining knobs are `conformal_cv_folds` and `conformal_geometry_aggregation`; the latter existed in no retained code and was reimplemented, then validated by reproducing three seed-42 runs at **0.00e+00** relative deviation. Re-running all 4 configurations x 3 splits (seeds 42/100/105) gives **33% / 67% / 0% / 0%**, whereas the manuscript reports 70% (a different 20-split reference), 0%, 67%, 67%. Two rows **invert**. The mechanism is coherent (`max` aggregation widens intervals, so removing it lowers simultaneous coverage), and the likely source of the manuscript's `0%` is `d224_seed42_sc_none`, which disables CV+ *and* aggregation together. See `tables/component_ablation_rerun.csv`. |
 | `tables/ncal_sweep_summary.csv` | raw source external | The 30-row summary and its aggregation script are in-repo, but the raw inputs (`p5_ncal_sweep_*` metrics) live in the external run store under `reports/wp2_timeaware_uq/<batch_id>/`. Fully reproducible given that store; see section 5. |
 
-**Recommended fix for `tab:component-ablation`:** either record the ablation harness and
-re-run the three seeds so the artifacts exist, or restate the table on the seed-42 result
-that is retained. Until then the table should be read as reported-but-uncorroborated.
+**Status of `tab:component-ablation`:** resolved as a reproducibility question, but the
+table it backs is contradicted by the re-run (see `docs/ablation_harness.md` §7). The
+re-run is trustworthy because (a) the reimplemented knob reproduces the three seed-42 runs
+at `0.00e+00`, and (b) the pass-criterion code reproduces the official
+`simultaneous_coverage_seed42_max.csv` exactly (24/24 rows). Awaiting a ruling on whether to
+correct the table or revisit the metric.
 
 ---
 

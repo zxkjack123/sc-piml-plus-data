@@ -55,6 +55,9 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 │   ├── benchmark_mean_wis_per_target.csv        # per-target Winkler scores (backs the Mean-WIS row)
 │   ├── base_model_leaderboard.csv               # 7 base learners (backs the base-model table)
 │   └── fig_s13_binwise_width_data.csv           # Figure S13 per-bin widths (was inlined in the script)
+│   └── component_ablation_rerun.csv             # component-ablation re-run (4 configs x 3 splits)
+├── docs/
+│   └── ablation_harness.md                      # recovered component-ablation harness + re-run results
 ├── LICENSE
 ├── requirements.txt
 ├── PROVENANCE.md                 # Artifact-to-source manifest + exclusion list
