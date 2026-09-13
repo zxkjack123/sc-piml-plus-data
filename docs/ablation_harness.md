@@ -210,3 +210,64 @@ from the published one, so the "CV+ is critical" narrative needs revisiting alon
 numbers. Until that re-framing is agreed, the honest interim position is that the ablation
 table's success rates are not supported by the retained artifacts, and that this is
 demonstrable on the one split whose identity can be verified rather than inferred.
+
+
+---
+
+## 8. Follow-up: the 20-split robustness claim was also re-run, and does not reproduce
+
+The manuscript's other simultaneous-coverage result is the 20-split robustness study:
+"14/20 splits (70%)" with mean "3.0 +/- 0.8" targets passing, seven named 4/4 seeds
+(100, 101, 103, 111, 112, 114, 116), and per-target rates 7Li 18/20, 6Li 17/20, 3H 16/20,
+decay heat 10/20. Those artifacts were never retained, so the study was re-run with the
+same recovered harness (full configuration: `cv_folds=5`, `aggregation=max`,
+`grouping=phase_time_bin`) over seeds 100-119, with the split protocol and pass criterion
+both re-validated first (seed-42 split reproduced exactly; criterion reproduced
+`simultaneous_coverage_seed42_max.csv` exactly, 24/24 rows).
+
+Result, and every published quantity disagrees:
+
+| Quantity | Published | Re-run |
+|---|---|---|
+| splits passing >=3/4 | 14/20 | **2/20** (seeds 107, 114) |
+| mean targets passing | 3.0 +/- 0.8 | **1.15 +/- 1.01** |
+| 4/4 seeds | 100,101,103,111,112,114,116 | **none** |
+| 7Li pass rate | 18/20 | **9/20** |
+| 6Li pass rate | 17/20 | **10/20** |
+| 3H pass rate | 16/20 | **3/20** |
+| decay heat pass rate | 10/20 | **1/20** |
+
+The seed-42 anchor does reproduce (4/4), so the instrument is sound; the published claim
+looks to be anchored on a favourable split while the other 19 mostly fail.
+
+### The headline is threshold-sensitive, and only matches at a looser threshold
+
+Sweeping the pass threshold over the same 20 runs
+(`tables/split_robust_20_threshold_sweep.csv`):
+
+| threshold | splits >=3/4 | mean | 3H / 6Li / 7Li / decay |
+|---|---|---|---|
+| **0.90 (as documented)** | **2/20** | 1.15 | 3 / 10 / 9 / 1 |
+| 0.85 | 7/20 | 1.95 | 8 / 16 / 11 / 4 |
+| **0.80** | **14/20** | 2.85 | 11 / 19 / 16 / 11 |
+| published | 14/20 | 3.00 | 16 / 17 / 18 / 10 |
+
+So the published 70% is only reached at a threshold about 10 percentage points looser than
+the one the manuscript states. At the stated 90% the figure is 10% (2/20). No threshold,
+however, reproduces the published per-target rates or the seven named 4/4 seeds, so the
+published detail is not reconstructible from this configuration under any threshold tested.
+
+### Caveat on an earlier diagnostic
+
+An earlier automated pass reported that a "geometry-level all-time coverage" variant
+reached 14/20 (mean 3.05). I could not reproduce that variant from its description: my
+closest reading gives 0/20 (requiring every time point of a geometry to be covered, no
+binning) and the marginal per-(geometry,time) reading gives 20/20. That diagnostic should
+therefore be treated as **unconfirmed** and is not relied on here. The threshold sweep above
+is the reproducible form of the same question.
+
+### Files
+
+- `tables/split_robust_20_seed100_119.csv` - 20 rows, per-seed min bin-wise simultaneous PICP and pass counts.
+- `tables/split_robust_20_threshold_sweep.csv` - the threshold sweep above.
+- Runs: `reports/wp2_timeaware_uq/d224_seed{100..119}_aggregation_max/`; splits `splits_d224_seed{100..119}.json`.
