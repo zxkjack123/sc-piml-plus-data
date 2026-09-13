@@ -51,6 +51,10 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 │   ├── method_overview_v2.tex    # TikZ source for Fig 1 (method overview)
 │   └── Fig_P3_*.pdf              # Figures 1–9 as used in the paper
 ├── tables/                       # CSV tables referenced in the paper
+│   ├── benchmark_6methods_unified_summary.csv   # 6 methods x 15 targets, PICP (backs the benchmark table)
+│   ├── benchmark_mean_wis_per_target.csv        # per-target Winkler scores (backs the Mean-WIS row)
+│   ├── base_model_leaderboard.csv               # 7 base learners (backs the base-model table)
+│   └── fig_s13_binwise_width_data.csv           # Figure S13 per-bin widths (was inlined in the script)
 ├── LICENSE
 ├── requirements.txt
 ├── PROVENANCE.md                 # Artifact-to-source manifest + exclusion list
@@ -60,11 +64,18 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 ## Data provenance
 
 `PROVENANCE.md` records, for every numeric artifact in the manuscript, the file that
-produced it, together with an **exclusion list** of artifacts that must not be used to
-derive published numbers. It currently flags one run whose SC-PIML column is contaminated
-by a degenerate log-transform on low-magnitude aggregates, and one superseded partial run.
-It also records the known reproducibility gaps in this release. Consult it before reusing
-any CSV in `tables/`.
+produced it. The previously missing sources for the **benchmark table**, its **Mean-WIS
+row**, the **base-model table** and **Figure S13** are now included in `tables/`, so the
+paper's headline tables are reproducible from this release alone. Many of these were verified
+by machine comparison (90/90 benchmark cells, 6/6 WIS grand means, 35/35 base-model values,
+24/24 + 24/24 error-table cells).
+
+`PROVENANCE.md` also carries an **exclusion list** of artifacts that must not be used to
+derive published numbers: one run whose SC-PIML column is contaminated by a degenerate
+log-transform on low-magnitude aggregates, and one superseded partial run. One gap remains
+open and is documented there: the component-ablation table's three-split entries have no
+retained artifacts (only seed 42 exists). Consult `PROVENANCE.md` before reusing any CSV in
+`tables/`.
 
 ## Reproducing the figures
 

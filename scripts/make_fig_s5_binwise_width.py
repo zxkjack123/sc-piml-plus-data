@@ -11,26 +11,35 @@ import matplotlib
 
 matplotlib.use("Agg")
 
-# Data from canonical split (seed 42) analysis
+# Data from canonical split (seed 42) analysis.
+# The per-bin widths are loaded from the versioned CSV
+# (tables/fig_s13_binwise_width_data.csv) rather than hardcoded inline, so the
+# figure is reproducible from a tracked, diffable artifact. See PROVENANCE.md.
 # Bin order: <=1d, 1d-1y, 1y-10y, 10y-100y, 100y-1ky, 1ky-10ky, >10ky
-bins = ["<=1d", "1d-1y", "1y-10y", "10y-100y", "100y-1ky", "1ky-10ky", ">10ky"]
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+_DATA_CSV = HERE.parent / "tables" / "fig_s13_binwise_width_data.csv"
+_df = pd.read_csv(_DATA_CSV)
+
+bins = list(dict.fromkeys(_df["bin"]))
+
+
+def _series(column):
+    """{target: [width_log10 per bin]}, with blank cells mapped to NaN."""
+    out = {}
+    for target, grp in _df.groupby("target", sort=False):
+        vals = []
+        for v in grp[column]:
+            s = str(v).strip()
+            vals.append(float(s) if s not in ("", "nan") else np.nan)
+        out[target] = vals
+    return out
+
 
 # Median width (log10 scale) for each target and aggregation mode
-# No aggregation (pooled)
-data_none = {
-    "atoms_H3": [np.nan, 0.1630, 0.0848, 0.0911, 1.0915, 5.6025, 5.6025],
-    "atoms_Li6": [np.nan, 0.0000, 0.0001, 0.0002, 0.0002, 0.0002, 0.0002],
-    "atoms_Li7": [np.nan, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
-    "decay_heat_W": [np.nan, 0.0364, 0.1549, 0.0020, 0.0018, 0.0018, 0.0018],
-}
-
-# Max aggregation (geometry-level)
-data_max = {
-    "atoms_H3": [np.nan, 0.3498, 0.1728, 0.1897, 0.5730, 4.5761, 4.5761],
-    "atoms_Li6": [np.nan, 0.0000, 0.0003, 0.0002, 0.0002, 0.0002, 0.0002],
-    "atoms_Li7": [np.nan, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
-    "decay_heat_W": [np.nan, 0.0285, 0.2700, 0.0040, 0.0016, 0.0016, 0.0016],
-}
+data_none = _series("median_width_log10_no_aggregation")
+data_max = _series("median_width_log10_max_aggregation")
 
 # Compute width ratios (max / none)
 ratios = {}
@@ -113,7 +122,7 @@ fig.savefig(output_path, dpi=300, bbox_inches="tight")
 print(f"Figure saved to: {output_path}")
 
 # Also save PNG for quick preview
-png_path = output_path.replace(".pdf", ".png")
+png_path = output_path.with_suffix(".png")
 fig.savefig(png_path, dpi=150, bbox_inches="tight")
 print(f"PNG preview saved to: {png_path}")
 
