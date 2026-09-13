@@ -1,5 +1,13 @@
 # Component-ablation harness (recovered and re-run, 2026-09-14)
 
+> **Scope notice.** This document describes work performed in the upstream
+> `COOL-PbLi-Burnup` working tree, **not in this data release**. None of `ml/`,
+> `datasets/`, the driver, the splits or the run directories referenced below are
+> contained in this repository. The only repo artifact from this work is
+> `tables/component_ablation_rerun.csv`; everything else needs the upstream tree plus a
+> specific interpreter (see §4). Paths written as `ml/...`, `datasets/...` or `reports/...`
+> are relative to the upstream repo root.
+
 This document records the harness behind the component-ablation table, which was
 previously unreproducible: the table's three-split values had no retained artifacts, and
 the driver version that produced them was lost. Everything below was recovered from the
@@ -15,7 +23,8 @@ artifacts existed on disk, and no invocation of the ablation was recorded in any
 An audit found the two knobs that define the rows, but the driver version that implements
 one of them (`conformal_geometry_aggregation`) was **not present in any retained code** —
 not the repo copy (2026-04-01), not the two staged copies (2026-02-13), not git history
-(`reports/` is gitignored and only 6 of `ml/`'s files are tracked). It has therefore been
+(in the **upstream** repository `reports/` is gitignored and only 6 of `ml/`'s files are
+tracked; this data repo is a separate repository). It has therefore been
 **reimplemented** and validated by reproduction.
 
 ## 2. Harness
@@ -125,21 +134,79 @@ force-to-5 path only fires when `--conformal-method cv_plus`; the default is `sp
 
 † the 20-split robustness reference, a different evaluation.
 
-### The re-run does not reproduce the table, and two rows invert
+### The re-run does not reproduce the table
 
-This is not a reproduction failure — the implementation reproduces the seed-42 runs at
-`0.00e+00`, and the pass-criterion code reproduces the official
-`simultaneous_coverage_seed42_max.csv` exactly. The pattern is also physically coherent:
-`max` aggregation gives wider intervals (qhat 0.0948 vs 0.0441), so removing it *narrows*
-intervals and *lowers* simultaneous coverage. That matches the manuscript's own Figure S3
-width argument, but contradicts its claim that removing aggregation leaves performance
-"comparable to MAX".
+This is not a reproduction failure. Three independent checks establish the instrument:
 
-A plausible diagnosis for the manuscript's `0%` row: the only seed-42 artifact that fails
-outright is `d224_seed42_sc_none`, which turns **both** CV+ **and** aggregation off
-(0/4 targets). Attributing that failure to CV+ removal alone confounds the two knobs. The
-`67% (2/3)` entries for the other two rows have no producing artifact on disk.
+1. The reimplementation reproduces three existing seed-42 runs at **0.00e+00** relative
+   deviation (§4).
+2. The pass-criterion code reproduces the official `simultaneous_coverage_seed42_max.csv`
+   exactly (24/24 rows, §5).
+3. **The instrument is calibrated against a number the manuscript itself publishes.** The
+   manuscript states "The canonical partition (seed~42, fixed \textit{a priori}) achieves
+   4/4 targets passing" (main text, split-robustness section). That is reproduced exactly.
 
-**This needs a ruling before the table is rewritten** — either the table is corrected to
-the re-run values (which requires rewriting the surrounding text, since the component
-ranking changes), or the metric is revisited.
+### Both inverted rows hold on verified ground alone
+
+The strongest form of the finding does not depend on the seeds 100/105 splits generated for
+this re-run. On the **seed-42 split alone** — the one split whose regeneration provably
+matches the retained `splits_d224_seed42.json` — the four configurations give:
+
+| Configuration | cv | aggregation | seed 42 | Manuscript |
+|---|---|---|---|---|
+| SC-PIML+ (full) | 5 | max | **4/4 PASS** | 4/4 (the §3 calibration anchor) |
+| No CV+ (split CP) | 0 | max | **3/4 PASS** | **0/3 splits fail** |
+| No aggregation (point-wise) | 5 | none | **0/4 fail** | **2/3 splits pass** |
+| 3-fold CV | 3 | max | 1/4 fail | 2/3 splits pass |
+
+`No CV+ (split CP)` **passes** on the verified split while the manuscript reports it as a
+catastrophic total failure; `No aggregation` **fails** on the verified split while the
+manuscript reports it as performing comparably to MAX. Both inversions are therefore
+established without relying on the generated splits.
+
+### The criterion is coverage-only, per the manuscript's own Methods
+
+A challenge worth pre-empting: if the pass rule were joint (coverage *and* width), the wider
+max-aggregated intervals would be penalised and the table could be internally consistent.
+The manuscript's Methods rules this out. It specifies the aggregation as "**per-geometry
+maxima** within each temporal bin", with the quantile "estimated from the set of per-geometry
+scores `{S_{i,g}}` **rather than** the full set of per-time-point scores", `n_cal,g ≈ 180`,
+and "the finite-sample correction ... ensuring exchangeability at the **geometry level**".
+That is exactly what the reimplementation does (§3), and it matches the observed
+`n_eff = 180`. The criterion is coverage-only.
+
+### Mechanism
+
+`max` aggregation widens intervals (qhat 0.0948 vs 0.0441 for `cooling|10y-100y`), so
+removing it *narrows* intervals and *lowers* simultaneous coverage. That is consistent with
+the manuscript's own Figure S3 width argument but contradicts its claim that removing
+aggregation leaves performance "comparable to MAX". Note that only `max` widens; `mean`
+aggregation narrows relative to `none` (qhat 0.0391 < 0.0441).
+
+A finite-sample explanation was tested and excluded: the quantile-level shift between
+`n_eff = 2700` and `180` is `(1+1/180)/(1+1/2700) ≈ 1.005` (about +0.5%), whereas the
+observed qhat change is 2.15x (+115%). And `max` and `mean` share `n_eff = 180` while
+differing 2.4x in qhat, so the operator rather than the sample count dominates.
+
+### A separate issue found while checking: the 20-split evidence is also thin
+
+The manuscript's `70% (14/20)` reference describes 20 partitions with 149/31/44 sizes on
+N=224 (seeds 100-119), naming seeds 100, 101, 103, 111, 112, 114, 116 as the 4/4 cases. The
+artifacts matching that description are **not** present: the only split-robustness runs on
+disk (`p5_split_robust_r00..r19_{global,time_bin}`) are on **N80** with **51/13/16** splits,
+`conformal_cv_folds = 0`, no aggregation knob, and no `phase_time_bin` grouping. The
+`d224_stability_max` directory that does correspond to a 20-split stability run retains only
+**seed 100's derived tables**. The `14/20` figure therefore cannot be reproduced from
+retained artifacts either, and per-seed claims such as "seed 100 achieved 4/4" cannot be
+cross-checked. This is noted for the same reason as the ablation discrepancy: it is
+checkable in principle, and currently is not checkable in practice.
+
+### Recommendation
+
+Correct the table to the re-run values, and re-frame the surrounding prose so that no stated
+contribution depends on the component ranking. The re-run's ranking (aggregation and CV+
+configuration matter; fold count does not rescue the row as previously described) differs
+from the published one, so the "CV+ is critical" narrative needs revisiting alongside the
+numbers. Until that re-framing is agreed, the honest interim position is that the ablation
+table's success rates are not supported by the retained artifacts, and that this is
+demonstrable on the one split whose identity can be verified rather than inferred.

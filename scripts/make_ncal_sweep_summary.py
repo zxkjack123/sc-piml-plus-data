@@ -92,6 +92,34 @@ def main(argv=None):
         )
         return 1
 
+    # Guard the exact grid the released CSV encodes. Without this, a run store missing a
+    # target (or a metrics.json lacking `splits`) would silently emit a short file or an
+    # n_train of 0, defeating the point of a byte-reproducible artifact.
+    expected = {
+        (n, g, t)
+        for n in (13, 16, 20, 26, 32)
+        for g in ("global", "time_bin")
+        for t in ("atoms_H3", "atoms_Li6", "atoms_Li7")
+    }
+    got = {(r["ncal"], r["grouping"], r["target"]) for r in rows}
+    if missing := expected - got:
+        print(
+            f"error: missing {len(missing)} (ncal, grouping, target) rows: "
+            f"{sorted(missing)}",
+            file=sys.stderr,
+        )
+        return 1
+    if len(rows) != 30:
+        print(f"error: expected 30 rows, got {len(rows)}", file=sys.stderr)
+        return 1
+    zero_train = [r for r in rows if int(r["n_train"]) == 0]
+    if zero_train:
+        print(
+            f"error: {len(zero_train)} rows have n_train=0 (splits block missing?)",
+            file=sys.stderr,
+        )
+        return 1
+
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with open(args.out, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=FIELDNAMES, lineterminator="\n")

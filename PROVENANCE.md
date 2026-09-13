@@ -21,7 +21,7 @@ file, not by inspection.
 | `tab:base-model-summary` (7 learners x 5 metrics) | `tables/base_model_leaderboard.csv` | **35/35** values match | traceable, **in-repo** |
 | `tab:error-by-bin` | `data/d224_stability_max/stability_20260721T183813Z/seed_100/table9_error_by_bin.csv` | **24/24** cells (4 targets x 6 bins) | traceable, in-repo |
 | `tab:error-stats` | `data/d224_stability_max/stability_20260721T183813Z/seed_100/table10_error_statistics.csv` | **24/24** cells (4 targets x 6 statistics) | traceable, in-repo |
-| Supplementary Fig. S1 (`ncal_sensitivity`) | raw: `.../wp2_timeaware_uq/<batch_id>/p5_ncal_sweep_ncal{nc}_{grouping}/metrics.json` -> `tables/ncal_sweep_summary.csv` (30 rows = 5 ncal x 2 groupings x 3 targets) -> `figures/Fig_P3_ncal_sensitivity.pdf` | aggregation script `scripts/make_ncal_sweep_summary.py` added; regenerating the CSV is **byte-identical** to the released one | traceable, reproducible (given the external run store) |
+| Supplementary Fig. S1 (`ncal_sensitivity`) | raw: `.../wp2_timeaware_uq/<batch_id>/p5_ncal_sweep_ncal{nc}_{grouping}/metrics.json` -> `tables/ncal_sweep_summary.csv` (30 rows = 5 ncal x 2 groupings x 3 targets) -> `figures/Fig_P3_ncal_sensitivity.pdf` | aggregation script `scripts/make_ncal_sweep_summary.py` added; regenerating the CSV is **byte-identical** to the released one. The final CSV-to-PDF plotting step is **not** scripted anywhere in either repo | CSV traceable and reproducible; PDF not reproducible |
 | Supplementary Fig. S3 / `Fig_S13_binwise_width_comparison` | `tables/fig_s13_binwise_width_data.csv` (28 rows = 4 targets x 7 bins), consumed by `scripts/make_fig_s5_binwise_width.py` | CSV reproduces the previously inlined arrays **exactly**; script now runs end-to-end | traceable, **in-repo** |
 
 ### Notes on individual artifacts
@@ -48,8 +48,8 @@ there). This confirms the manuscript's stated range and justifies its wording.
 
 | Artifact | Status | Detail |
 |---|---|---|
-| `tab:component-ablation` | **resolved, and the table does not stand** | The harness was recovered and re-run — see `docs/ablation_harness.md`. The two defining knobs are `conformal_cv_folds` and `conformal_geometry_aggregation`; the latter existed in no retained code and was reimplemented, then validated by reproducing three seed-42 runs at **0.00e+00** relative deviation. Re-running all 4 configurations x 3 splits (seeds 42/100/105) gives **33% / 67% / 0% / 0%**, whereas the manuscript reports 70% (a different 20-split reference), 0%, 67%, 67%. Two rows **invert**. The mechanism is coherent (`max` aggregation widens intervals, so removing it lowers simultaneous coverage), and the likely source of the manuscript's `0%` is `d224_seed42_sc_none`, which disables CV+ *and* aggregation together. See `tables/component_ablation_rerun.csv`. |
-| `tables/ncal_sweep_summary.csv` | raw source external | The 30-row summary and its aggregation script are in-repo, but the raw inputs (`p5_ncal_sweep_*` metrics) live in the external run store under `reports/wp2_timeaware_uq/<batch_id>/`. Fully reproducible given that store; see section 5. |
+| `tab:component-ablation` | **resolved, and the table does not stand** | The harness was recovered and re-run — see `docs/ablation_harness.md`. The two defining knobs are `conformal_cv_folds` and `conformal_geometry_aggregation`; the latter existed in no retained code and was reimplemented, then validated by reproducing three seed-42 runs at **0.00e+00** relative deviation. Re-running all 4 configurations x 3 splits (seeds 42/100/105) gives **33% / 67% / 0% / 0%**, whereas the manuscript reports 70% (a different 20-split reference), 0%, 67%, 67%. **Three of the four rows disagree with the manuscript**, two of them in the opposite direction. The mechanism is coherent (`max` aggregation widens intervals, so removing it lowers simultaneous coverage), and the likely source of the manuscript's `0%` is `d224_seed42_sc_none`, which disables CV+ *and* aggregation together. See `tables/component_ablation_rerun.csv`. |
+| `tables/ncal_sweep_summary.csv` | raw source external | The 30-row summary and its aggregation script are in-repo, but the raw inputs (`p5_ncal_sweep_*` metrics) live in the external run store under `reports/wp2_timeaware_uq/<batch_id>/`. The **CSV aggregation** is reproducible given that store (byte-identical, section 5); the **CSV to Figure S1 PDF plotting step was an unretained ad-hoc step and is not reproducible here**. |
 
 **Status of `tab:component-ablation`:** resolved as a reproducibility question, but the
 table it backs is contradicted by the re-run (see `docs/ablation_harness.md` §7). The
@@ -121,5 +121,6 @@ python3 scripts/make_ncal_sweep_summary.py --run-store "$RUN" --out /tmp/ncal_re
 cmp /tmp/ncal_regen.csv tables/ncal_sweep_summary.csv   # expect byte-identical
 ```
 
-The benchmark and base-model chains are now fully in-repo (section 1). Only the
-`tab:component-ablation` gap in section 2 remains open.
+**What cannot be re-checked from this repo alone.** The source tables for the benchmark, Mean-WIS, base-model and error-decomposition claims are included here, but the *cell-by-cell comparisons* (90/90, 6/6, 35/35, 24/24) were run against the manuscript text and against `reports/` directories that are **not** part of this release, and no checker script is shipped. The same applies to the `0.00e+00` reproduction of the three seed-42 ablation runs, which needs the upstream working tree and a specific interpreter. Treat those as reported-and-sourced, not as re-verifiable from this repo alone.
+
+The `tab:component-ablation` status in section 2 is the one open item.

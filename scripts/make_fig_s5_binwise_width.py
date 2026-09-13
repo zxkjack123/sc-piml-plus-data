@@ -111,13 +111,7 @@ for idx, target in enumerate(targets):
 plt.tight_layout()
 
 # Save figure
-from pathlib import Path
-
-output_path = (
-    Path(__file__).resolve().parents[1]
-    / "figures"
-    / "Fig_S13_binwise_width_comparison.pdf"
-)
+output_path = HERE.parent / "figures" / "Fig_S13_binwise_width_comparison.pdf"
 fig.savefig(output_path, dpi=300, bbox_inches="tight")
 print(f"Figure saved to: {output_path}")
 

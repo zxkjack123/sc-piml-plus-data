@@ -1,13 +1,13 @@
-configuration,cv_folds,geometry_aggregation,seed,min_simPICP_atoms_H3,min_simPICP_atoms_Li6,min_simPICP_atoms_Li7,min_simPICP_decay_heat_W,targets_passing,success
-SC-PIML+ (full),5,max,42,0.9091,0.9091,0.9545,0.9091,4,1
-SC-PIML+ (full),5,max,100,0.6667,0.8636,0.8409,0.8182,0,0
-SC-PIML+ (full),5,max,105,0.75,0.8636,0.9545,0.7273,1,0
-No CV+ (split CP),0,max,42,0.8333,0.9091,0.9773,0.9545,3,1
-No CV+ (split CP),0,max,100,0.8864,0.9545,0.8864,0.9091,2,0
-No CV+ (split CP),0,max,105,0.75,0.9545,0.9773,0.9091,3,1
-No aggregation (point-wise),5,none,42,0.4091,0.5909,0.3636,0.5,0,0
-No aggregation (point-wise),5,none,100,0.3864,0.4545,0.2727,0.4545,0,0
-No aggregation (point-wise),5,none,105,0.3182,0.5,0.2273,0.5,0,0
-3-fold CV,3,max,42,0.8333,0.9091,0.8409,0.8636,1,0
-3-fold CV,3,max,100,0.7727,0.8636,0.8409,0.7273,0,0
-3-fold CV,3,max,105,0.8182,0.8864,0.9773,0.6136,1,0
+configuration,cv_folds,geometry_aggregation,seed,min_simPICP_atoms_H3,min_simPICP_atoms_Li6,min_simPICP_atoms_Li7,min_simPICP_decay_heat_W,targets_passing,success,split_provenance
+SC-PIML+ (full),5,max,42,0.9091,0.9091,0.9545,0.9091,4,1,verified: matches retained splits_d224_seed42.json
+SC-PIML+ (full),5,max,100,0.6667,0.8636,0.8409,0.8182,0,0,generated via _make_split; see docs/ablation_harness.md §2
+SC-PIML+ (full),5,max,105,0.75,0.8636,0.9545,0.7273,1,0,generated via _make_split; see docs/ablation_harness.md §2
+No CV+ (split CP),0,max,42,0.8333,0.9091,0.9773,0.9545,3,1,verified: matches retained splits_d224_seed42.json
+No CV+ (split CP),0,max,100,0.8864,0.9545,0.8864,0.9091,2,0,generated via _make_split; see docs/ablation_harness.md §2
+No CV+ (split CP),0,max,105,0.75,0.9545,0.9773,0.9091,3,1,generated via _make_split; see docs/ablation_harness.md §2
+No aggregation (point-wise),5,none,42,0.4091,0.5909,0.3636,0.5,0,0,verified: matches retained splits_d224_seed42.json
+No aggregation (point-wise),5,none,100,0.3864,0.4545,0.2727,0.4545,0,0,generated via _make_split; see docs/ablation_harness.md §2
+No aggregation (point-wise),5,none,105,0.3182,0.5,0.2273,0.5,0,0,generated via _make_split; see docs/ablation_harness.md §2
+3-fold CV,3,max,42,0.8333,0.9091,0.8409,0.8636,1,0,verified: matches retained splits_d224_seed42.json
+3-fold CV,3,max,100,0.7727,0.8636,0.8409,0.7273,0,0,generated via _make_split; see docs/ablation_harness.md §2
+3-fold CV,3,max,105,0.8182,0.8864,0.9773,0.6136,1,0,generated via _make_split; see docs/ablation_harness.md §2

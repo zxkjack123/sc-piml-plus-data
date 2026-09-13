@@ -38,13 +38,16 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 │   │   └── candidate/            # SC-PIML+ with acceptance gate
 │   ├── d224_alltargets/          # Full 15-target run (9 nuclides + 6 derived)
 │   └── d224_stability_max/       # 20-split stability run (seed 100 shown; error-decomposition inputs)
+                              #   NOTE: only seed 100's derived tables are retained; the other 19
+                              #   splits' runs are absent, so the 14/20 figure is not re-derivable here
 ├── scripts/                      # Python scripts to regenerate paper figures
 │   ├── make_fig2_actual_evolution.py      # Fig 2: temporal evolution curves
 │   ├── make_figs3_4_per_time_bin.py       # Figs 3–4: per-time-step & per-bin calibration
 │   ├── make_figs3_4_9_regenerate.py       # Figs 3, 4, 9: alternative generation + method comparison
 │   ├── make_figs5_8_ood_analysis.py       # Figs 5–8: projection ablation & OOD analysis
 │   ├── analyze_error_decomposition.py     # R1: Tables 8–9, error decomposition (seed 100)
-│   ├── make_fig_s5_binwise_width.py       # R1: Figure S13, binwise width comparison
+│   ├── make_fig_s5_binwise_width.py       # R1: Figure S13, binwise width comparison (file name retained for history)
+│   ├── make_ncal_sweep_summary.py         # R1: rebuilds tables/ncal_sweep_summary.csv (Figure S1 intermediate)
 │   ├── make_p3_baseline_comparison_figure.py  # R1: baseline comparison figure
 │   └── generate_base_model_comparison_fig.py  # R1: base-learner comparison figure
 ├── figures/                      # Generated figures (PDF)
