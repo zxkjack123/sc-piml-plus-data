@@ -21,7 +21,7 @@ file, not by inspection.
 | `tab:base-model-summary` (7 learners x 5 metrics) | `tables/base_model_leaderboard.csv` | **35/35** values match | traceable, **in-repo** |
 | `tab:error-by-bin` | `data/d224_stability_max/stability_20260721T183813Z/seed_100/table9_error_by_bin.csv` | **24/24** cells (4 targets x 6 bins) | traceable, in-repo |
 | `tab:error-stats` | `data/d224_stability_max/stability_20260721T183813Z/seed_100/table10_error_statistics.csv` | **24/24** cells (4 targets x 6 statistics) | traceable, in-repo |
-| Supplementary Fig. S1 (`ncal_sensitivity`) | raw: `reports/wp2_timeaware_uq/p5_ncal_sweep_ncal{nc}_{grouping}/metrics.json` -> `tables/ncal_sweep_summary.csv` (30 rows) -> figure via `ml/plot_p3_ncal_sensitivity.py` | chain identified from the generator's `read_csv`/`savefig` calls | traceable |
+| Supplementary Fig. S1 (`ncal_sensitivity`) | raw: `.../wp2_timeaware_uq/<batch_id>/p5_ncal_sweep_ncal{nc}_{grouping}/metrics.json` -> `tables/ncal_sweep_summary.csv` (30 rows = 5 ncal x 2 groupings x 3 targets) -> `figures/Fig_P3_ncal_sensitivity.pdf` | aggregation script `scripts/make_ncal_sweep_summary.py` added; regenerating the CSV is **byte-identical** to the released one | traceable, reproducible (given the external run store) |
 | Supplementary Fig. S3 / `Fig_S13_binwise_width_comparison` | `tables/fig_s13_binwise_width_data.csv` (28 rows = 4 targets x 7 bins), consumed by `scripts/make_fig_s5_binwise_width.py` | CSV reproduces the previously inlined arrays **exactly**; script now runs end-to-end | traceable, **in-repo** |
 
 ### Notes on individual artifacts
@@ -49,7 +49,7 @@ there). This confirms the manuscript's stated range and justifies its wording.
 | Artifact | Status | Detail |
 |---|---|---|
 | `tab:component-ablation` | **partial** | The four-row table mixes denominators: the `70% (14/20)` entry is a cross-reference to the 20-split robustness result (fine). The other entries (`0%`, `67% (2/3)`, `67% (2/3)`) describe a **three-split** ablation (seeds 42/100/105 per the section prose), but **only seed-42 artifacts exist on disk** (`reports/wp2_timeaware_uq/d224_seed42_{aggregation_max,aggregation_mean,aggregation_none,sc_none,scpiml_max}`). No producing artifact was found for the `0%` / `2/3` values, and no seeds 100/105 ablation directories exist. The numbers are consistent with the section prose but are **not independently reproducible** from the retained artifacts. |
-| `tables/ncal_sweep_summary.csv` | raw source external | The 30-row summary is in-repo, but the raw inputs (`p5_ncal_sweep_*` metrics) live in the external run store. |
+| `tables/ncal_sweep_summary.csv` | raw source external | The 30-row summary and its aggregation script are in-repo, but the raw inputs (`p5_ncal_sweep_*` metrics) live in the external run store under `reports/wp2_timeaware_uq/<batch_id>/`. Fully reproducible given that store; see section 5. |
 
 **Recommended fix for `tab:component-ablation`:** either record the ablation harness and
 re-run the three seeds so the artifacts exist, or restate the table on the seed-42 result
@@ -111,6 +111,11 @@ for m in ('SC','CQR','ACI','EnbPI','SC-PIML','SC-PIML+'):
 
 # 3. Figure S3 (fully in-repo)
 python3 scripts/make_fig_s5_binwise_width.py
+
+# 4. Figure S1 intermediate (needs the external run store)
+RUN=/mnt/nas/ComputeData/CFETR/COOL-PbLi-Burnup/reports/wp2_timeaware_uq/n80_deepsmoke_addon_v1_addon2_mat_v3_absct_recalc_20260118
+python3 scripts/make_ncal_sweep_summary.py --run-store "$RUN" --out /tmp/ncal_regen.csv
+cmp /tmp/ncal_regen.csv tables/ncal_sweep_summary.csv   # expect byte-identical
 ```
 
 The benchmark and base-model chains are now fully in-repo (section 1). Only the
