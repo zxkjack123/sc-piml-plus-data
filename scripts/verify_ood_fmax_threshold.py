@@ -185,11 +185,11 @@ def main(argv=None):
         f"{np.percentile(list(per_target_max.values()), 99):.4f})"
     )
 
-    # which target carries the largest f_max (manuscript names 55Fe for the max)
+    # which target carries the largest f_max (the value the manuscript reports as the pooled maximum)
     worst = max(per_target_max, key=per_target_max.get)
     print(
         f"  worst target by max f_max: {worst} ({per_target_max[worst]:.4f})"
-        f"   manuscript names: atoms_Fe55"
+        f"   (the manuscript reports this pooled maximum without attributing it to a single target)"
     )
 
     if ood:
