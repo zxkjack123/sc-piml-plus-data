@@ -38,23 +38,50 @@ prediction error decomposition (`scripts/analyze_error_decomposition.py`,
 │   │   └── candidate/            # SC-PIML+ with acceptance gate
 │   ├── d224_alltargets/          # Full 15-target run (9 nuclides + 6 derived)
 │   └── d224_stability_max/       # 20-split stability run (seed 100 shown; error-decomposition inputs)
+                              #   NOTE: only seed 100's derived tables are retained; the other 19
+                              #   splits' runs are absent, so the 14/20 figure is not re-derivable here
 ├── scripts/                      # Python scripts to regenerate paper figures
 │   ├── make_fig2_actual_evolution.py      # Fig 2: temporal evolution curves
 │   ├── make_figs3_4_per_time_bin.py       # Figs 3–4: per-time-step & per-bin calibration
 │   ├── make_figs3_4_9_regenerate.py       # Figs 3, 4, 9: alternative generation + method comparison
 │   ├── make_figs5_8_ood_analysis.py       # Figs 5–8: projection ablation & OOD analysis
 │   ├── analyze_error_decomposition.py     # R1: Tables 8–9, error decomposition (seed 100)
-│   ├── make_fig_s5_binwise_width.py       # R1: Figure S13, binwise width comparison
+│   ├── make_fig_s5_binwise_width.py       # R1: Figure S13, binwise width comparison (file name retained for history)
+│   ├── make_ncal_sweep_summary.py         # R1: rebuilds tables/ncal_sweep_summary.csv (Figure S1 intermediate)
 │   ├── make_p3_baseline_comparison_figure.py  # R1: baseline comparison figure
 │   └── generate_base_model_comparison_fig.py  # R1: base-learner comparison figure
 ├── figures/                      # Generated figures (PDF)
 │   ├── method_overview_v2.tex    # TikZ source for Fig 1 (method overview)
 │   └── Fig_P3_*.pdf              # Figures 1–9 as used in the paper
 ├── tables/                       # CSV tables referenced in the paper
+│   ├── benchmark_6methods_unified_summary.csv   # 6 methods x 15 targets, PICP (backs the benchmark table)
+│   ├── benchmark_mean_wis_per_target.csv        # per-target Winkler scores (backs the Mean-WIS row)
+│   ├── base_model_leaderboard.csv               # 7 base learners (backs the base-model table)
+│   └── fig_s13_binwise_width_data.csv           # Figure S13 per-bin widths (was inlined in the script)
+│   └── component_ablation_rerun.csv             # component-ablation re-run (4 configs x 3 splits)
+├── docs/
+│   └── ablation_harness.md                      # recovered component-ablation harness + re-run results
 ├── LICENSE
 ├── requirements.txt
+├── PROVENANCE.md                 # Artifact-to-source manifest + exclusion list
 └── README.md
 ```
+
+## Data provenance
+
+`PROVENANCE.md` records, for every numeric artifact in the manuscript, the file that
+produced it. The previously missing sources for the **benchmark table**, its **Mean-WIS
+row**, the **base-model table** and **Figure S13** are now included in `tables/`, so the
+paper's headline tables are reproducible from this release alone. Many of these were verified
+by machine comparison (90/90 benchmark cells, 6/6 WIS grand means, 35/35 base-model values,
+24/24 + 24/24 error-table cells).
+
+`PROVENANCE.md` also carries an **exclusion list** of artifacts that must not be used to
+derive published numbers: one run whose SC-PIML column is contaminated by a degenerate
+log-transform on low-magnitude aggregates, and one superseded partial run. One gap remains
+open and is documented there: the component-ablation table's three-split entries have no
+retained artifacts (only seed 42 exists). Consult `PROVENANCE.md` before reusing any CSV in
+`tables/`.
 
 ## Reproducing the figures
 
