@@ -125,3 +125,21 @@ cmp /tmp/ncal_regen.csv tables/ncal_sweep_summary.csv   # expect byte-identical
 **What cannot be re-checked from this repo alone.** The source tables for the benchmark, Mean-WIS, base-model and error-decomposition claims are included here, but the *cell-by-cell comparisons* (90/90, 6/6, 35/35, 24/24) were run against the manuscript text and against `reports/` directories that are **not** part of this release, and no checker script is shipped. The same applies to the `0.00e+00` reproduction of the three seed-42 ablation runs, which needs the upstream working tree and a specific interpreter. Treat those as reported-and-sourced, not as re-verifiable from this repo alone.
 
 The `tab:component-ablation` status in section 2 is the one open item.
+
+## OOD width factors
+
+The per-target factors reported in the manuscript are reproduced by
+`scripts/compute_ood_width_factors.py` from the released predictions in
+`data/n70_valid/`:
+
+```
+python scripts/compute_ood_width_factors.py --repo-root .
+```
+
+Definition: `f_row = max(y_hi_cal / y_hat, y_hat / y_lo_cal)`, with each term clamped at
+`eps` (taken from the run's `timeaware_uq_config.json`; `eps = 1.0` for both N=70 runs).
+The N=70 runs use global conformal calibration, so the multiplier is identical at every
+time point and the per-time maximum equals the per-time median. The script verifies its
+medians against the published table and exits non-zero on any mismatch.
+
+Values (baseline run): H-3 5.123120, Li-6 249.890892, Li-7 72882.459801.
