@@ -271,3 +271,38 @@ is the reproducible form of the same question.
 - `tables/split_robust_20_seed100_119.csv` - 20 rows, per-seed min bin-wise simultaneous PICP and pass counts.
 - `tables/split_robust_20_threshold_sweep.csv` - the threshold sweep above.
 - Runs: `reports/wp2_timeaware_uq/d224_seed{100..119}_aggregation_max/`; splits `splits_d224_seed{100..119}.json`.
+
+
+---
+
+## 9. Independent numerical spot-check of the results tables
+
+A separate independent pass re-derived the numbers from the raw `predictions_test_*.csv`
+files. All checks passed; no arithmetic error, transcription error, fabricated value or
+cross-file contradiction was found.
+
+| Check | Result |
+|---|---|
+| All PICP values in [0, 1], no NaN/blank | pass (128 values across both tables) |
+| Every value equals an achievable rational k/n_geometries | pass (80/80 once the correct per-bin denominators are used) |
+| `targets_passing` equals count of the four columns >= 0.90; `success` equals `>= 3` | pass (20/20 and 12/12 rows) |
+| Threshold sweep recomputed from the raw 20-row table | pass (all 7 rows; std agrees to 0.004, consistent with 2-dp storage) |
+| Monotonicity: lower threshold cannot reduce passing splits or mean targets | pass (no violation) |
+| Cross-file: seeds 100/105 agree between the two tables for the same configuration | pass |
+| Seed 42 values and `targets_passing = 4` | pass |
+| **Bin-wise criterion reproduces the retained `simultaneous_coverage_seed42_max.csv`** | **pass: 24/24 rows, 0 cell mismatches across 24 x 4 comparisons** |
+| End-to-end raw traces, seed 114 (claimed 3/4) and seed 102 (claimed 0/4) | pass, all 8 values identical to 6 dp |
+| At threshold 0.90 exactly 2/20 splits pass; at 0.80 exactly 14/20 | pass |
+
+### One assumption that must not be restated in the manuscript
+
+Per-bin geometry counts are **not** uniform. For `atoms_Li6`, `atoms_Li7` and
+`decay_heat_W` every bin carries all 44 test geometries, but for **`atoms_H3`** the two tail
+bins carry between **3 and 11** geometries depending on the split (measured across seeds
+100-119: observed counts 3, 4, 6, 7, 8, 9, 10, 11). This is why some reported values are
+not multiples of 1/44 or 1/6 (e.g. seed 103 gives 6/7 = 0.8571, seed 116 gives 7/10 = 0.7000);
+both were traced back to the raw predictions and are correct.
+
+Consequence: any statement of the form "the tail bins contain six geometries" is true for
+the canonical seed-42 split only, and is **false in general for `atoms_H3`**. Do not restate
+it in the manuscript.
